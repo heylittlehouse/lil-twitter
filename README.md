@@ -53,14 +53,15 @@ Emphasize modular, maintainable Javascript, utilizing some of the best practices
 
 - Following the [Module Pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript)
 - Following a loose MVC structure to separate concerns
+- Practicing OO patterns via use of constructor functions and the `new` keyword
 - Using a module loader to manage dependencies cleanly
 - Write tests using a JS testing framework like Jasmine
 
 ##### Release 2: Ensure
 
-JavaScript can be more difficult to test than ruby code, and OO design is often used as a replacement for full test coverage. That said, you should still be writing tests for your JavaScript code base. We've already installed [the jasmine-rails gem](https://github.com/searls/jasmine-rails) for you. Some guidelines:
+JavaScript can be more difficult to test than ruby code, and OO design is often used as a replacement for full test coverage. That said, you should still be writing tests for your JavaScript code base. Some guidelines:
 
-   - testing your view objects and DOM interaction is difficult, as it requires a fair amount of setup to get right. It is more important that you test [the cyclomatic complexity](http://en.wikipedia.org/wiki/Cyclomatic_complexity#Implications_for_software_testing) of your controllers and models.
+   - Testing your view objects and DOM interaction is difficult, as it requires a fair amount of setup to get right. It is more important that you test [the cyclomatic complexity](http://en.wikipedia.org/wiki/Cyclomatic_complexity#Implications_for_software_testing) of your controllers and models.
    - AJAX calls are also hard to test, and should be stubbed out for the purposes of your test suite. [Use Jasmine spies](https://github.com/pivotal/jasmine/wiki/Spies) to test that these functions have been called.
    - Your integration testing should be handled through capybara. You can use [the Poltergeist driver](https://github.com/teampoltergeist/poltergeist) for feature testing with a focus on JavaScript functionality.
 
