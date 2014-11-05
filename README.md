@@ -1,35 +1,23 @@
-## Lil' Twitter
+# Li'l Twitter
 
-## Learning Competencies
+### Learning Competencies
 
 - Build a client-side-heavy Rails-API or Sinatra application
 - Consume a JSON API
 - Build single-page app using raw OO JS, Backbone, or other JS single-page app framework
 - Write organized and maintainable Javascript code
 
-## Summary
+### Summary
 
-Your mission: build a one-page app using Javascript to render a simple dashboard for a twitter application.
+Your mission: build a one-page app using Javascript to render a simple dashboard for a Twitter clone.
 
 You'll be responsible for implementing the JS, HTML, and CSS, giving the application a beautiful, usable interface that's logically-structured and uses your Rails-API- or Sinatra-based API for JSON data transfer.
 
-## Development Setup
+### Setting up the Application
 
-requires ruby and rubygems.
-```sh
-$ bundle install
-$ rake db:create && rake db:migrate && rake db:seed
-$ rails server
-```
+Generate your application using Rails-API or Sinatra. You'll need to serve an `index.html` page (served via the `public` directory in Rails-API, or via a `get '/'` route in Sinatra) that references your JS and CSS.
 
-to run the tests:
-```sh
-$ rake db:test:prepare
-$ rake spec
-
-$ brew install phantomjs
-$ RAILS_ENV=test bundle exec rake spec:javascript
-````
+All of your JS scripts should be referenced from this `index.html` file, either via individual script tags or via a module loader like RequireJS.
 
 ## Releases
 
