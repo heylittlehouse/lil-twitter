@@ -17,7 +17,7 @@ You'll be responsible for implementing the JS, HTML, and CSS, giving the applica
 
 Generate your application using Rails-API or Sinatra. You'll need to serve an `index.html` page (served via the `public` directory in Rails-API, or via a root `get '/'` route in Sinatra) that references your JS and CSS.
 
-All of your JS scripts should be referenced from this `index.html` file, either via individual script tags or via a module loader like [RequireJS](http://requirejs.org/).
+All of your JS scripts should be referenced from this `index.html` file, either via individual `<script>` tags or via a module loader like [RequireJS](http://requirejs.org/).
 
 You ARE allowed to use third-party libs on this application. Go nuts with CSS grids and frameworks, JS libraries, and premade image assets.
 
@@ -27,21 +27,23 @@ You ARE allowed to use third-party libs on this application. Go nuts with CSS gr
 
 Your site needs to have the following functionality:
 
-> - On page load, the 50 most recent tweets are displayed in the 'river' running down the middle of the page.
-> - On page load, the 10 most popular hashtags are displayed.
->
-> - A user can create a tweet, which will get saved into the database with a fake username, fake handle, and fake avatar (which is all handled server-side).
-> - Any hashtags the tweet includes (e.g. #yolo), should also be associated with that tweet.
-> - The new tweet should appear atop the 'river', preferrably with some sort of animation.
->
-> - A user can search for a specific hashtag using the search bar. The results of the search will be displayed in the river, replacing whatever was there before.
-> - If the user searches for a hashtag that does not exist, the search bar turns red.
->
-> - A user can click on a trending topic in the trends box, which causes the river to display all tweets that are associated with that hashtag, replacing whatever was there before.
->
-> - When a user clicks on the Lil Twitter header, the 50 most recent tweets are displayed.
+- On page load, the 50 most recent tweets are displayed in the 'river' running down the middle of the page.
+- On page load, the 10 most popular hashtags are displayed.
 
-All of this will be accomplished using JavaScript. Spend some time thinking about your architecture – what objects do you need? What are their interfaces? What does your file structure look like? Make sure you aren't micromanaging or over-designing -- Big Design Up Front is never great -- but your team will benefit from some basic architecture desicisions before starting.
+- A user can create a tweet, which will get saved into the database with a fake username, fake handle, and fake avatar (which is all handled server-side).
+- Any hashtags the tweet includes (e.g. #yolo), should also be associated with that tweet.
+- The new tweet should appear atop the 'river', preferrably with some sort of animation.
+
+- A user can search for a specific hashtag using the search bar. The results of the search will be displayed in the river, replacing whatever was there before.
+- If the user searches for a hashtag that does not exist, the search bar turns red.
+
+- A user can click on a trending topic in the trends box, which causes the river to display all tweets that are associated with that hashtag, replacing whatever was there before.
+
+- When a user clicks on the Lil Twitter header, the 50 most recent tweets are displayed.
+
+All of this will be accomplished using Javascript.
+
+Spend some time thinking about your architecture: what objects do you need? What are their interfaces? What does your file structure look like? Make sure you aren't micro-managing or over-designing - Big Design Up Front is never great - but your team will benefit from some basic architectural desicisions before starting.
 
 ##### Release 1: Build
 
