@@ -9,15 +9,17 @@
 
 ### Summary
 
-Your mission: build a one-page app using Javascript to render a simple dashboard for a Twitter clone.
+Your mission: build a one-page app using Javascript to render a simple dashboard (the default homepage) for a Twitter clone.
 
-You'll be responsible for implementing the JS, HTML, and CSS, giving the application a beautiful, usable interface that's logically-structured and uses your Rails-API- or Sinatra-based API for JSON data transfer.
+You'll be responsible for implementing the JS, HTML, and CSS, giving the application a beautiful, usable interface that's logically-structured and uses your Sinatra- or Rails-API-based API for JSON data transfer.
 
 ### Setting up the Application
 
-Generate your application using Rails-API or Sinatra. You'll need to serve an `index.html` page (served via the `public` directory in Rails-API, or via a `get '/'` route in Sinatra) that references your JS and CSS.
+Generate your application using Rails-API or Sinatra. You'll need to serve an `index.html` page (served via the `public` directory in Rails-API, or via a root `get '/'` route in Sinatra) that references your JS and CSS.
 
-All of your JS scripts should be referenced from this `index.html` file, either via individual script tags or via a module loader like RequireJS.
+All of your JS scripts should be referenced from this `index.html` file, either via individual script tags or via a module loader like [RequireJS](http://requirejs.org/).
+
+You ARE allowed to use third-party libs on this application. Go nuts with CSS grids and frameworks, JS libraries, and premade image assets.
 
 ### Releases
 
