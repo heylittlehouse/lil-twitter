@@ -67,7 +67,7 @@ JavaScript can be more difficult to test than ruby code, and OO design is often 
 
 ##### Release 3: Expand
 
-The benefits of OO architecture is that it is easily extendable. Add an additional feture to your application, like:
+The benefits of OO architecture is that it is easily extendable. Add an additional feature to your application, like:
 
  - a system for checking if new tweets have been created since page load, using long-polling.
  - have the timeline of tweets only display 10 tweets, and dynamically load more when the user scrolls to the bottom of the page.
