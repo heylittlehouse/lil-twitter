@@ -2,14 +2,16 @@
 
 ## Learning Competencies
 
-- Build a client side heavy Rails application.
-- Consume a JSON API.
-- Build Single Page App.
-- write organized JavaScript code
+- Build a client-side-heavy Rails-API or Sinatra application
+- Consume a JSON API
+- Build single-page app using raw OO JS, Backbone, or other JS single-page app framework
+- Write organized and maintainable Javascript code
 
 ## Summary
 
-Your mission: build a one-page app using  Javascript to render a simple dashboard for a twitter application. The HTML, CSS, and back-end are already written for you -- all you need to do is write the JavaScript.
+Your mission: build a one-page app using Javascript to render a simple dashboard for a twitter application.
+
+You'll be responsible for implementing the JS, HTML, and CSS, giving the application a beautiful, usable interface that's logically-structured and uses your Rails-API- or Sinatra-based API for JSON data transfer.
 
 ## Development Setup
 
