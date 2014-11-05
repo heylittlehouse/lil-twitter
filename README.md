@@ -27,19 +27,19 @@ You ARE allowed to use third-party libs on this application. Go nuts with CSS gr
 
 Your site needs to have the following functionality:
 
-- On page load, the 50 most recent tweets are displayed in the 'river' running down the middle of the page.
+- On page load, the 50 most recent tweets are displayed in the timeline running down the middle of the page.
 - On page load, the 10 most popular hashtags are displayed.
 
 - A user can create a tweet, which will get saved into the database with a fake username, fake handle, and fake avatar (which is all handled server-side).
 - Any hashtags the tweet includes (e.g. #yolo), should also be associated with that tweet.
-- The new tweet should appear atop the 'river', preferrably with some sort of animation.
+- The new tweet should appear atop the timeline, preferrably with some sort of animation.
 
-- A user can search for a specific hashtag using the search bar. The results of the search will be displayed in the river, replacing whatever was there before.
+- A user can search for a specific hashtag using the search bar. The results of the search will be displayed in the timeline, replacing whatever was there before.
 - If the user searches for a hashtag that does not exist, the search bar turns red.
 
-- A user can click on a trending topic in the trends box, which causes the river to display all tweets that are associated with that hashtag, replacing whatever was there before.
+- A user can click on a trending topic in the trends box, which causes the timeline to display all tweets that are associated with that hashtag, replacing whatever was there before.
 
-- When a user clicks on the Lil Twitter header, the 50 most recent tweets are displayed.
+- When a user clicks on the Li'l Twitter header logo, the 50 most recent tweets are displayed.
 
 All of this will be accomplished using Javascript.
 
@@ -62,7 +62,7 @@ JavaScript can be more difficult to test than ruby code, and OO design is often 
 The benefits of OO architecture is that it is easily extendable. Add an additional feture to your application, like:
 
  - a system for checking if new tweets have been created since page load, using long-polling.
- - have the river of tweets only display 10 tweets, and dynamically load more when the user scrolls to the bottom of the page.
+ - have the timeline of tweets only display 10 tweets, and dynamically load more when the user scrolls to the bottom of the page.
  - give the user the ability to click hashtags inside tweets, which would display tweets associated with that hashtag.
 
 ##### Endpoint Documentation
