@@ -19,9 +19,9 @@ Generate your application using Rails-API or Sinatra. You'll need to serve an `i
 
 All of your JS scripts should be referenced from this `index.html` file, either via individual script tags or via a module loader like RequireJS.
 
-## Releases
+### Releases
 
-### Release 0: Architect
+##### Release 0: Architect
 
 Your site needs to have the following functionality:
 
@@ -41,11 +41,11 @@ Your site needs to have the following functionality:
 
 All of this will be accomplished using JavaScript. Spend some time thinking about your architecture – what objects do you need? What are their interfaces? What does your file structure look like? Make sure you aren't micromanaging or over-designing -- Big Design Up Front is never great -- but your team will benefit from some basic architecture desicisions before starting.
 
-### Release 1: Build
+##### Release 1: Build
 
 Okay, now build the thing. You should avoid any changes to the server-side code, although if you feel like changes are necessary, implement them and make sure the tests reflect your alterations. You will need to remove the filler elements in `app/views/index.html`. Structural changes to HTML and CSS should not be necessary, and it is generally a bad idea to unilaterally change a resource that your entire team depends on. Any changes to the existing code base, no matter how small, should be done intentionally and in consultation with your entire team.
 
-### Release 2: Ensure
+##### Release 2: Ensure
 
 JavaScript can be more difficult to test than ruby code, and OO design is often used as a replacement for full test coverage. That said, you should still be writing tests for your JavaScript code base. We've already installed [the jasmine-rails gem](https://github.com/searls/jasmine-rails) for you. Some guidelines:
 
@@ -53,7 +53,7 @@ JavaScript can be more difficult to test than ruby code, and OO design is often 
    - AJAX calls are also hard to test, and should be stubbed out for the purposes of your test suite. [Use Jasmine spies](https://github.com/pivotal/jasmine/wiki/Spies) to test that these functions have been called.
    - Your integration testing should be handled through capybara. You can use [the Poltergeist driver](https://github.com/teampoltergeist/poltergeist) for feature testing with a focus on JavaScript functionality.
 
-### Release 3: Expand
+##### Release 3: Expand
 
 The benefits of OO architecture is that it is easily extendable. Add an additional feture to your application, like:
 
@@ -61,7 +61,7 @@ The benefits of OO architecture is that it is easily extendable. Add an addition
  - have the river of tweets only display 10 tweets, and dynamically load more when the user scrolls to the bottom of the page.
  - give the user the ability to click hashtags inside tweets, which would display tweets associated with that hashtag.
 
-### Endpoint Documentation
+##### Endpoint Documentation
 
 `GET /tweets/recent` returns the 50 most recently created tweets in JSON format. The response body looks like this:
 
