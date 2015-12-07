@@ -78,7 +78,7 @@ $('#tweet-form').on('submit', function(event){
     var parsedResponse = Tweet.parseTagsFromSubmit(response);
     var tweet = new Tweet(parsedResponse);
     var listItem = Tweet.buildListItem(tweet);
-    $('#tweets-container').find('ul').prepend(listItem);
+    $('#tweets-container').find('ul').prepend($(listItem).fadeIn(1500));
   }).fail(function(error){
     console.log(error);
   })
