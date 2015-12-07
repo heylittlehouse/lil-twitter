@@ -5,7 +5,7 @@ $(document).ready(function(){
     this.handle = args.handle;
     this.tagNames = args.hashtag_names;
     this.username = args.username;
-    this.timeAgo;
+    this.timeAgo = args.timeAgo || " 0 seconds";
   };
 
   Tweet.formatTags = function(tagNames){
@@ -32,6 +32,7 @@ $(document).ready(function(){
     return html
   };
 
+/* populate the recent tweet board */
   $.get('/tweets/recent').then(function(response){
     var tweets = [];
     for(var i=0; i < response.length; i++){
@@ -50,10 +51,27 @@ $(document).ready(function(){
     };
   });
 
+/* populate the trending hashtags */
   $.get('/hashtags/popular').then(function(response){
-    var formatTags = Tweet.formatTags(response).split(" ")
+    var formatTags = Tweet.formatTags(response).split(" ") //bc it returns each hashtag as a string
     for(var i=0; i<response.length; i++){
       $('#trends-container').find('ul').append('<li>' + formatTags[i] + '</li>')
     }
+  });
+
+$('#tweet-form').on('submit', function(event){
+  event.preventDefault();
+
+  $.ajax({
+    method: "post",
+    url: "/tweets",
+    data: $(event.target).serialize()
+  }).done(function(response){
+    var tweet = new Tweet(response)
+    var listItem = Tweet.buildListItem(tweet)
+    $('#tweets-container').find('ul').prepend(listItem);
+  }).fail(function(error){
+    console.log(error);
   })
+})
 });
