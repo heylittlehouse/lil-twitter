@@ -32,6 +32,13 @@ $(document).ready(function(){
     return html
   };
 
+  Tweet.parseTagsFromSubmit = function(params){
+    splitContent = params.content.split(" #");
+    params.content = splitContent.shift();
+    params.hashtag_names = splitContent;
+    return params
+  };
+
 /* populate the recent tweet board */
   $.get('/tweets/recent').then(function(response){
     var tweets = [];
@@ -59,6 +66,7 @@ $(document).ready(function(){
     }
   });
 
+/* ajax new tweet to the top of the river */
 $('#tweet-form').on('submit', function(event){
   event.preventDefault();
 
@@ -67,8 +75,9 @@ $('#tweet-form').on('submit', function(event){
     url: "/tweets",
     data: $(event.target).serialize()
   }).done(function(response){
-    var tweet = new Tweet(response)
-    var listItem = Tweet.buildListItem(tweet)
+    var parsedResponse = Tweet.parseTagsFromSubmit(response);
+    var tweet = new Tweet(parsedResponse);
+    var listItem = Tweet.buildListItem(tweet);
     $('#tweets-container').find('ul').prepend(listItem);
   }).fail(function(error){
     console.log(error);
