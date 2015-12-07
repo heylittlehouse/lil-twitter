@@ -8,10 +8,10 @@ $(document).ready(function(){
     this.timeAgo;
   };
 
-  Tweet.formatTags = function(tweet){
+  Tweet.formatTags = function(tagNames){
     var tags = "";
-    for(var i=0; i < tweet.tagNames.length; i++){
-      tags += "#" + tweet.tagNames[i] + " "
+    for(var i=0; i < tagNames.length; i++){
+      tags += "#" + tagNames[i] + " "
     };
     return tags
   };
@@ -26,7 +26,7 @@ $(document).ready(function(){
     html += '<span class="timestamp">' + tweet.timeAgo + '</span>'
     html += '</p>'
     html += '<p>' + tweet.content + '</p>'
-    html += '<p>' + Tweet.formatTags(tweet) + '</p>'
+    html += '<p>' + Tweet.formatTags(tweet.tagNames) + '</p>'
     html += '</div>'
     html += '</li>'
     return html
@@ -39,14 +39,21 @@ $(document).ready(function(){
     };
      return tweets
   }).then(function(tweets){
-    listItems=[];
+    htmlItems=[];
     for(var i=0; i < tweets.length; i++){
-      listItems.push(Tweet.buildListItem(tweets[i]))
+      htmlItems.push(Tweet.buildListItem(tweets[i]))
     };
-    return listItems
+    return htmlItems
   }).then(function(htmlItems){
     for(var i=0; i<htmlItems.length; i++){
       $('#tweets-container').find('ul').append(htmlItems[i])
     };
   });
+
+  $.get('/hashtags/popular').then(function(response){
+    var formatTags = Tweet.formatTags(response).split(" ")
+    for(var i=0; i<response.length; i++){
+      $('#trends-container').find('ul').append('<li>' + formatTags[i] + '</li>')
+    }
+  })
 });
