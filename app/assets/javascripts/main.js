@@ -66,7 +66,7 @@ $(document).ready(function(){
     }
   });
 
-/* ajax new tweet to the top of the river */
+/* ajax new tweet to the top of the river...and it FADES! */
 $('#tweet-form').on('submit', function(event){
   event.preventDefault();
 
@@ -78,7 +78,8 @@ $('#tweet-form').on('submit', function(event){
     var parsedResponse = Tweet.parseTagsFromSubmit(response);
     var tweet = new Tweet(parsedResponse);
     var listItem = Tweet.buildListItem(tweet);
-    $('#tweets-container').find('ul').prepend($(listItem).fadeIn(1500));
+    $('#new-tweet').val("");
+    $('#tweets-container').find('ul').prepend($(listItem).fadeIn(1000));
   }).fail(function(error){
     console.log(error);
   })
