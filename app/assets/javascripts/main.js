@@ -118,11 +118,21 @@ function recomposeURI(serializedData){
         htmlItems.push(Tweet.buildListItem(tweets[i]))
       };
       return htmlItems
-    }).then(function(htmlItems){
+    }).done(function(htmlItems){
         $('#tweets-container').find('ul').find('li').remove();
       for(var i=0; i<htmlItems.length; i++){
         $('#tweets-container').find('ul').append(htmlItems[i])
       };
-    });
+    }).fail(function(error){
+      console.log(error)
+      $("#search").css({
+        'background-color': "red",
+        'border-color': "red"
+      });
+      $("#search").animate({
+        'background-color': "white",
+        'border-color': "white"
+      }, 3000);
+    })
   });
 });
