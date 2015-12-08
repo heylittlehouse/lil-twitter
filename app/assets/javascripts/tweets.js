@@ -31,6 +31,7 @@ $(document).ready(function(){
     event.preventDefault();
     var log = $(event.target).children("#new-tweet").val();
     var hashtags = log.match(/(#[a-z0-9][a-z0-9\-_]*)/ig) || []
+    log = log.replace(/(#[a-z0-9][a-z0-9\-_]*)/ig, "")
     for(var i=0; i < hashtags.length; i++){
       hashtags[i] = hashtags[i].replace('#', '');
     }
@@ -64,6 +65,7 @@ $(document).ready(function(){
       var template = Handlebars.compile(source);
       var output = template({tweets: response});
       $("#tweets-container ul").html(output);
+      $("#search-form #search").val("");
     }).fail(function(){
       $("#search-form #search").css("background-color", "red").fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     });

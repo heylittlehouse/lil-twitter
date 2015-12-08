@@ -38,7 +38,11 @@
           <span class="username">{{handle}}</span>
           <span class="timestamp">{{created_at}}</span>
         </p>
-        <p>{{content}}</p>
+        <p>{{content}}
+        {{#each hashtag_names}}
+          #{{this}}
+        {{/each}}
+        </p>
       </div>
     </li>
     {{/each}}
