@@ -76,12 +76,11 @@ function recomposeURI(serializedData){
   $('#tweet-form').on('submit', function(event){
     event.preventDefault();
     var hashtagsArr = recomposeURI($(event.target).serialize())
-    var params = $.param(
-      {
+    var params = $.param({
         tweet: {content: $('#new-tweet').val()},
         hashtags: hashtagsArr
-      }
-        );
+      });
+
     $.ajax({
       method: "post",
       url: "/tweets",
@@ -104,12 +103,26 @@ function recomposeURI(serializedData){
 
     $.ajax({
       method: "get",
-      url: '/tweets/search',
-      data: $(event.target).serialize()
-    }).done(function(response){
-      console.log(response)
-    }).fail(function(error){
-
-    })
-  })
+      url: '/tweets/search/' + $(event.target).find("#search").val(),
+      data: $(event.target).serialize(),
+      dataType: "json"
+    }).then(function(response){
+      var tweets = [];
+      for(var i=0; i < response.length; i++){
+        tweets.push(new Tweet(response[i]));
+      };
+       return tweets
+    }).then(function(tweets){
+      htmlItems=[];
+      for(var i=0; i < tweets.length; i++){
+        htmlItems.push(Tweet.buildListItem(tweets[i]))
+      };
+      return htmlItems
+    }).then(function(htmlItems){
+        $('#tweets-container').find('ul').find('li').remove();
+      for(var i=0; i<htmlItems.length; i++){
+        $('#tweets-container').find('ul').append(htmlItems[i])
+      };
+    });
+  });
 });
