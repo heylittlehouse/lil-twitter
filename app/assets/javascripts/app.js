@@ -1,4 +1,4 @@
-var timeStamp = function(timeString){
+function timeStamp(timeString) {
   var timeSinceCreate;
   var now = moment();
   var created = moment(timeString);
@@ -13,23 +13,17 @@ var timeStamp = function(timeString){
   }
 }
 
-var renderTweetPartial = function(data){
-  console.log(data);
-  data.timestamp = timeStamp(data.created_at);
-  var output = template(data);
-  $("#tweets-container ul").prepend(output);
-}
 
 
 $(document).ready(function(){
 
   var riverSource = $("#tweet-river").html();
   var riverTemplate = Handlebars.compile(riverSource);
-  var singleSoure =  $('#tweet-template').html();
-  var singleTemplate = Handlebars.compile(singleSoure);
+  var singleSource =  $('#tweet-template').html();
+  var singleTemplate = Handlebars.compile(singleSource);
 
-  Handlebars.registerPartial('singleTweet', $('#tweet-template').html());
-
+  Handlebars.registerPartial('singleTweet', singleSource);
+  Handlebars.registerHelper('timeStamp', timeStamp)
   $.get("/tweets/recent")
   .then(function(response){
 
@@ -37,7 +31,6 @@ $(document).ready(function(){
     // var template = Handlebars.compile(source);
     // var output = template({tweets: response});
     // $("#tweets-container ul").append(output);
-    console.log(response);
     var output = riverTemplate({tweets: response});
     $('#tweets-container ul#tweets').html(output);
 
@@ -58,30 +51,47 @@ $(document).ready(function(){
     event.preventDefault();
     var content = $(event.target).children("#new-tweet").val();
     var hashtags = [];
-    var tag = content.match(/#[a-z]+/)
+    var tag = content.match(/#[a-zA-Z]+/);
     while (tag != null) {
+      content = content.replace(tag, "")
       hashtags.push(tag[0]);
-      content.replace(tag[0], "");
-      tag = content.match(/#[a-z]+/);
+      tag = content.match(/#[a-zA-Z]+/);
     }
-    content = content.trim();
-    // var params = $.param({
-    //   tweet: {
-    //     content: content,
-    //     hashtags: hashtags
-    //   }
-    // })
-    debugger
+    content = content.trim().replace(/\s+/, " ");
+    var params = $.param({
+      tweet: {
+        content: content,
+      },
+      hashtags: hashtags.map(function(tag){tag = tag.replace("#", ""); return tag})
+    })
     $.ajax({
       method: 'post',
       url: "/tweets",
-      data: $(event.target).serialize(),
+      data: params,
       datatype: "json"
     }).done(function(response){
-      console.log(response)
-      $('#tweets-container ul#tweets').prepend(singleTemplate(response));
+      $(singleTemplate(response)).hide().prependTo('#tweets-container ul#tweets').fadeIn("slow");
+      // $('#tweets-container ul#tweets').prepend(newTweet);
+
+
     }).fail(function(error){
       console.log(error)
+    })
+  })
+
+  $('#search-form').on('submit', function(event){
+    event.preventDefault();
+    var keyword = $('#search').val()
+    $.ajax({
+      method: 'get',
+      url: '/tweets/search/' + keyword,
+      datatype: 'json'
+    }).done(function(response){
+      $('#tweets-container ul li').fadeOut()
+      var output = riverTemplate({tweets: response});
+      $('#tweets-container').append(output);
+    }).fail(function(error){
+      console.log(error);
     })
   })
 

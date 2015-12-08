@@ -3,7 +3,7 @@
   <form id="search-form">
     <input id="search" type="text" name="query">
   </form>
-  <i class="fa fa-search"></i>
+  <i id="search-btn" class="fa fa-search"></i>
 </header>
 <section class="container">
   <section id="tweet-box">
@@ -44,7 +44,7 @@
       <p>
         <span class="full-name">{{username}}</span>
         <span class="username">{{handler}}</span>
-        <span class="timestamp">- {{timestamp}}</span>
+        <span class="timestamp">- {{{timeStamp created_at }}}</span>
       </p>
       <p>{{content}}</p>
 
@@ -63,7 +63,7 @@
 
 <script id="tweet-river" type="text/x-handlebars-template">
   {{#each tweets}}
-    {{> singleTweet}}
+    {{>singleTweet}}
   {{/each}}
 </script>
 
