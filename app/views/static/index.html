@@ -32,7 +32,7 @@
 
 <script id="hash-tag-template" type="text/x-handlebars-template">
   {{#each tags}}
-    <li>{{tag}}</li>
+    <li><a class="top-hashtags" href="tweets/search/{{this}}">{{this}}</a></li>
   {{/each}}
 </script>
 
@@ -47,15 +47,6 @@
         <span class="timestamp">- {{{timeStamp created_at }}}</span>
       </p>
       <p>{{content}}</p>
-
-      <section id="tags">
-      <ul>
-      {{#each hashtag_names}}
-        <li>#{{this}}</li>
-      {{/each}}
-      </ul>
-
-      </section>
 
     </div>
   </li>

@@ -21,30 +21,41 @@ $(document).ready(function(){
   var riverTemplate = Handlebars.compile(riverSource);
   var singleSource =  $('#tweet-template').html();
   var singleTemplate = Handlebars.compile(singleSource);
+  var tagSource = $("#hash-tag-template").html();
+  var tagTemplate = Handlebars.compile(tagSource);
 
   Handlebars.registerPartial('singleTweet', singleSource);
   Handlebars.registerHelper('timeStamp', timeStamp)
+
+  function poll(){
+    setTimeout(function(){
+      $.ajax({
+        method: 'get',
+        url: '/tweets/recent',
+        datatype: 'json'
+      }).done(function(response){
+
+        $('#tweets li').fadeOut('slow')
+        $('#tweets').append(riverTemplate({tweets: response}))
+        poll();
+      }).fail(function(error) {
+        console.log(error);
+      });
+    }, 10000);
+  }
+  poll();
+
+
   $.get("/tweets/recent")
   .then(function(response){
-
-    // var source = $("#tweet-template").html();
-    // var template = Handlebars.compile(source);
-    // var output = template({tweets: response});
-    // $("#tweets-container ul").append(output);
     var output = riverTemplate({tweets: response});
     $('#tweets-container ul#tweets').html(output);
-
   });
 
   $.get("/hashtags/popular")
   .then(function(response){
-    for (var i = 0; i < response.length; i++) {
-      var html = ""
-      html += "<li>"
-      html += response[i]
-      html += "</li>"
-      $('#top-hash-tags').append(html);
-    }
+    var output = tagTemplate({tags: response});
+    $("#top-hash-tags").html(output);
   });
 
   $('#tweet-form').on('submit', function(event){
@@ -52,18 +63,20 @@ $(document).ready(function(){
     var content = $(event.target).children("#new-tweet").val();
     var hashtags = [];
     var tag = content.match(/#[a-zA-Z]+/);
+
     while (tag != null) {
       content = content.replace(tag, "")
       hashtags.push(tag[0]);
       tag = content.match(/#[a-zA-Z]+/);
     }
-    content = content.trim().replace(/\s+/, " ");
+
+    content = $(event.target).children("#new-tweet").val();
     var params = $.param({
       tweet: {
         content: content,
       },
       hashtags: hashtags.map(function(tag){tag = tag.replace("#", ""); return tag})
-    })
+    });
     $.ajax({
       method: 'post',
       url: "/tweets",
@@ -71,28 +84,52 @@ $(document).ready(function(){
       datatype: "json"
     }).done(function(response){
       $(singleTemplate(response)).hide().prependTo('#tweets-container ul#tweets').fadeIn("slow");
-      // $('#tweets-container ul#tweets').prepend(newTweet);
-
-
     }).fail(function(error){
-      console.log(error)
-    })
-  })
+      console.log(error);
+    });
+  });
 
   $('#search-form').on('submit', function(event){
     event.preventDefault();
-    var keyword = $('#search').val()
+    var keyword = $('#search').val();
     $.ajax({
       method: 'get',
       url: '/tweets/search/' + keyword,
       datatype: 'json'
     }).done(function(response){
-      $('#tweets-container ul li').fadeOut()
+      $('#search').css('background-color', 'white');
+      $('#tweets-container .tweet').fadeOut();
+      var output = riverTemplate({tweets: response});
+      $('#tweets-container').append(output);
+    }).fail(function(error){
+      $('#search').css('background-color', '#ff4d4d');
+    })
+  });
+
+  $('#trends-container').on('click', 'a', function(event){
+    event.preventDefault();
+    $.ajax({
+      method: 'get',
+      url: $(event.target).attr('href'),
+      datatype: 'json'
+    }).done(function(response){
+      $('#tweets-container .tweet').fadeOut('slow');
       var output = riverTemplate({tweets: response});
       $('#tweets-container').append(output);
     }).fail(function(error){
       console.log(error);
     })
-  })
+  });
 
+  $('#brand').on('click', function(){
+    $.get("/tweets/recent")
+    .then(function(response){
+      console.log(response);
+      $('#tweets-container .tweet').fadeOut('slow');
+      var output = riverTemplate({tweets: response});
+      $('#tweets-container ul#tweets').append(output);
+    });
+  })
 });
+
+
