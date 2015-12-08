@@ -66,22 +66,50 @@ $(document).ready(function(){
     }
   });
 
-/* ajax new tweet to the top of the river...and it FADES! */
-$('#tweet-form').on('submit', function(event){
-  event.preventDefault();
+/* recompose the URI serialized data */
+function recomposeURI(serializedData){
+  var splitArr = serializedData.split("+%23");
+  return hashtagsArr = splitArr.slice(1);
+}
 
-  $.ajax({
-    method: "post",
-    url: "/tweets",
-    data: $(event.target).serialize()
-  }).done(function(response){
-    var parsedResponse = Tweet.parseTagsFromSubmit(response);
-    var tweet = new Tweet(parsedResponse);
-    var listItem = Tweet.buildListItem(tweet);
-    $('#new-tweet').val("");
-    $('#tweets-container').find('ul').prepend($(listItem).fadeIn(1000));
-  }).fail(function(error){
-    console.log(error);
+/* ajax new tweet to the top of the river...and it FADES! */
+  $('#tweet-form').on('submit', function(event){
+    event.preventDefault();
+    var hashtagsArr = recomposeURI($(event.target).serialize())
+    var params = $.param(
+      {
+        tweet: {content: $('#new-tweet').val()},
+        hashtags: hashtagsArr
+      }
+        );
+    $.ajax({
+      method: "post",
+      url: "/tweets",
+      data: params
+    }).done(function(response){
+      var parsedResponse = Tweet.parseTagsFromSubmit(response);
+      var tweet = new Tweet(parsedResponse);
+      var listItem = Tweet.buildListItem(tweet);
+      $('#new-tweet').val("");
+      $('#tweets-container').find('ul').prepend($(listItem).fadeIn(1000));
+    }).fail(function(error){
+      console.log(error);
+    });
   })
-})
+
+/* ajax in hashtag search */
+
+  $("#search-form").on('submit', function(event){
+    event.preventDefault();
+
+    $.ajax({
+      method: "get",
+      url: '/tweets/search',
+      data: $(event.target).serialize()
+    }).done(function(response){
+      console.log(response)
+    }).fail(function(error){
+
+    })
+  })
 });
