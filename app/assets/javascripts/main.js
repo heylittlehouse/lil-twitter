@@ -62,7 +62,7 @@ $(document).ready(function(){
   $.get('/hashtags/popular').then(function(response){
     var formatTags = Tweet.formatTags(response).split(" ") //bc it returns each hashtag as a string
     for(var i=0; i<response.length; i++){
-      $('#trends-container').find('ul').append('<li>' + formatTags[i] + '</li>')
+      $('#trends-container').find('ul').append('<li><a href="/tweets/search/' + response[i] + '">' + formatTags[i] + '</a></li>')
     }
   });
 
@@ -96,14 +96,19 @@ function recomposeURI(serializedData){
     });
   })
 
-/* ajax in hashtag search */
-
-  $("#search-form").on('submit', function(event){
+/* ajax in hashtag */
+  var hashtagAjax= function(event){
     event.preventDefault();
+
+    if(event.target.tagName == "FORM"){
+      var myURL = '/tweets/search/' + $(event.target).find("#search").val();
+    }else{
+      var myURL = $(event.target).attr("href");
+    };
 
     $.ajax({
       method: "get",
-      url: '/tweets/search/' + $(event.target).find("#search").val(),
+      url: myURL,
       data: $(event.target).serialize(),
       dataType: "json"
     }).then(function(response){
@@ -124,7 +129,6 @@ function recomposeURI(serializedData){
         $('#tweets-container').find('ul').append(htmlItems[i])
       };
     }).fail(function(error){
-      console.log(error)
       $("#search").css({
         'background-color': "red",
         'border-color': "red"
@@ -134,5 +138,13 @@ function recomposeURI(serializedData){
         'border-color': "white"
       }, 3000);
     })
-  });
+  };
+
+/* ajax for the search bar */
+  $("#search-form").on('submit', hashtagAjax);
+
+/* ajax for the trending tags ul */
+  $("#trends-container").on('click', 'a', hashtagAjax);
+
+/* call the hashtag ajax method above for click */
 });
