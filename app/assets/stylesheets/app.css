@@ -24,6 +24,10 @@ li {
   list-style-type: none;
 }
 
+header a {
+  color: white;
+}
+
 a {
   color: #FF0057;
 }

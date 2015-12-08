@@ -1,5 +1,5 @@
 <header id="top-nav">
-  <div id="brand">Lil' Twitter API</div>
+  <div id="brand"><a class="header-link" href = "/tweets/recent">Lil' Twitter API</a></div>
   <form id="search-form">
     <input id="search" type="text" name="query">
   </form>
@@ -46,6 +46,6 @@
 
   <script id="trends-template" type="text/x-handlebars-template">
     {{#each trends}}
-      <li>{{this}}</li>
+      <li ><a class="hashtag-link" href = "/tweets/search/{{this}}">{{this}}</a></li>
     {{/each}}
   </script>
