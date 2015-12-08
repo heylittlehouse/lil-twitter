@@ -24,7 +24,7 @@
 
   <section id="tweets-container">
     <h3>Tweets</h3>
-    <ul>
+    <ul id="tweets">
 
     </ul>
   </section>
@@ -38,17 +38,32 @@
 
 
 <script id="tweet-template" type="text/x-handlebars-template">
-  {{#each tweets}}
   <li class="tweet">
     <img class="avatar" src="{{avatar_url}}" alt="Avatar">
     <div class="tweet-content">
       <p>
         <span class="full-name">{{username}}</span>
         <span class="username">{{handler}}</span>
-        <span class="timestamp">- 6m</span>
+        <span class="timestamp">- {{timestamp}}</span>
       </p>
       <p>{{content}}</p>
+
+      <section id="tags">
+      <ul>
+      {{#each hashtag_names}}
+        <li>#{{this}}</li>
+      {{/each}}
+      </ul>
+
+      </section>
+
     </div>
   </li>
+</script>
+
+<script id="tweet-river" type="text/x-handlebars-template">
+  {{#each tweets}}
+    {{> singleTweet}}
   {{/each}}
 </script>
+
