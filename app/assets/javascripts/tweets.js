@@ -49,7 +49,7 @@ $(document).ready(function(){
     });
   });
 
-  $("#search-form").on("click", "input",function(event){
+  $("#search-form").on("click keypress", "input",function(event){
     $("#search-form #search").css("background-color", "white");
   });
 
