@@ -5,7 +5,7 @@ $(document).ready(function(){
     this.handle = args.handle;
     this.tagNames = args.hashtag_names;
     this.username = args.username;
-    this.timeAgo = args.timeAgo || " 0 seconds";
+    this.timeAgo = " "+(new Date - new Date(args.created_at))+ " seconds ago" || " 0 seconds ago";
   };
 
   Tweet.formatTags = function(tagNames){
