@@ -61,7 +61,7 @@ $(document).ready(function(){
     e.stopImmediatePropagation();
     var tweetContent = $($(e.target).children()[0]).val();
     var data = $.param( { tweet: {content: tweetContent} } );
-    data += "&"+$.param( { hashtags: getHashTags(tweetContent) } );
+    data += "&"+$.param( { hashtags: model.getHashTags(tweetContent) } );
     $.ajax({
       url: "/tweets",
       method: "post",
@@ -145,8 +145,8 @@ var View = function() {
   this.river = "";
   this.trends = "";
   this.init = function() {
-    river = $($("#tweets-container").children()[1]);
-    trends = $($("#trends-container").children()[1]);
+    this.river = $($("#tweets-container").children()[1]);
+    this.trends = $($("#trends-container").children()[1]);
   }
 
 }
@@ -180,7 +180,7 @@ View.prototype.outputNewTweetToRiver = function($el){
 
 /* Runner */
 var firstPage = new View();
-view.init();
+firstPage.init();
 var tweets = new Model();
 var ctrl = new Controller();
 ctrl.init(tweets,firstPage);
