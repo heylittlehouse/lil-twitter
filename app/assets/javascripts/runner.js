@@ -1,4 +1,4 @@
-$(document).ready(function(){
+//$(document).ready(function(){
 
   /* Model */
 
@@ -185,4 +185,8 @@ var tweets = new Model();
 var ctrl = new Controller();
 ctrl.init(tweets,firstPage);
 
-});
+
+
+
+
+//});
