@@ -19,10 +19,68 @@ $(document).ready(function(){
       $(river).prepend(el);
       $($(river).children()[0]).hide();
       $($(river).children()[0]).slideDown();
+      e.target.reset();
     });
 
+  });
+
+  $(".fa.fa-search").on("click", function(e){
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    var data = $("[name='query']").val();
+    console.log(data);
+    if (data != "") {
+      $.ajax({
+        url: "/tweets/search/"+data,
+      }).done(function(res) {
+        $("[name='query']").css("background-color","white");
+        $("[name='query']").val("");
+        $(river).hide();
+        $(river).html(outputToRiver(res));
+        $(river).slideDown();
+      }).fail(function(res) {
+        $("[name='query']").css("background-color","red");
+      });
+    }
 
   });
+
+  $("#trends-container").on("click", ".trending-tag", function(e){
+    // $(e.target).preventDefault();
+    // $(e.target).stopImmediatePropagation();
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    console.log($(this).html());
+    $.ajax({
+        url: "/tweets/search/"+$(this).html(),
+      }).done(function(res) {
+        $(river).hide();
+        $(river).html(outputToRiver(res));
+        $(river).slideDown();
+      });
+  });
+
+  $("#tweets-container").on("click", ".hash-tag", function(e){
+    // $(e.target).preventDefault();
+    // $(e.target).stopImmediatePropagation();
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    var data = $(this).html();
+    data = data.replace("#","");
+    $.ajax({
+        url: "/tweets/search/"+data,
+      }).done(function(res) {
+        $(river).hide();
+        $(river).html(outputToRiver(res));
+        $(river).slideDown();
+      });
+  });
+
+ $("#brand").on("click", function(e){
+  $.get("/tweets/recent").then(function(res){
+    $(river).html(outputToRiver(res));
+  });
+ });
 
   $.get("/tweets/recent").then(function(res){
     $(river).html(outputToRiver(res));
@@ -52,9 +110,8 @@ $(document).ready(function(){
      html += '<p>';
      html += '<span class="full-name">'+data[i].username+'</span>';
      html += '<span class="username">'+data[i].handle+'</span>';
-     // html += '<span class="timestamp">'+(data[i].created_at - (new Date())) +'</span>';
      html += '</p>';
-     html += '<p>'+data[i].content+" "+ getTags(data[i].hashtag_names) +'</p>';
+     html += '<p>'+ contentSiftForHashTags(data[i].content, data[i].hashtag_names) +'</p>';
      html += '</div>';
      html += '</li>';
  }
@@ -62,17 +119,25 @@ $(document).ready(function(){
   // $(river).html(html);
   };
 
- var getTags =function(tagnames) {
-  var tags = "";
-  tagnames.forEach(function(el,ind,arr){tags += "<a href=''>#"+el+"</a> "});
-  return tags;
- };
+
+ var contentSiftForHashTags= function(content, hashtags) {
+  hashtags.forEach(function(el, ind, ar){
+    content = content.replace("#"+el, "<a class='hash-tag' href=''>#"+el+"</a>");
+  });
+  return content;
+ }
+
+ // var getTags =function(tagnames) {
+ //  var tags = "";
+ //  tagnames.forEach(function(el,ind,arr){tags += "<a href=''>#"+el+"</a> "});
+ //  return tags;
+ // };
 
 
  var outputToTrends = function(data) {
   var html = "";
   data.forEach(function(el,index,ar){
-    html += "<li>"+el+"</li>";
+    html += "<li><a class='trending-tag' href=''>"+el+"</a></li>";
   });
   $(trends).html(html);
  }
